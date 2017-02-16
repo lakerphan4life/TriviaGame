@@ -8,20 +8,19 @@ var game = {
 
     showGame: function() {
 		$('#start').addClass('hidden');
-		$('.questionList').removeClass('hidden');
-		$('#title').html("Ready");
-		setTimeout(game.set,700);
-		setTimeout(game.go,1400);
-		setTimeout(timer.start,2200);
+		$('#title').html("Ready...");
+		setTimeout(game.set,1000);
+		setTimeout(game.go,2000);
+		setTimeout(timer.start,2800);
 
     },
 
     set: function() {
-    	$('#title').html("Set");
+    	$('#title').html("...Set...");
     },
 
     go: function () {
-    	$('#title').html("GO!");
+    	$('#title').html("GO!").addClass('massive');
     },
 
 	result: function() {
@@ -36,7 +35,7 @@ var game = {
 			}
 		};
 
-		$('#title').html("GAME OVER"); //Display GAME OVER text
+		$('#title').html("GAME OVER").addClass('massive'); //Display GAME OVER text
 		$('.questionList').addClass('hidden');	//hide the questions
 		$('#resetDiv').removeClass('hidden');	//show the reset div
 		$('#unanswered').html("Unanswered: " + this.unanswered); //display the no. of unanswered 
@@ -53,7 +52,8 @@ var timer = {
 
 
 	start: function() {
-		$('#title').html("Time Remaining: " + timer.timeConverter(timer.time) + " seconds!");
+		$('.questionList').removeClass('hidden');
+		$('#title').html("Time Remaining: " + timer.timeConverter(timer.time) + " seconds!").removeClass('massive');
 		intervalId = setInterval(timer.count, 1000);
       	console.log(timer.time)
   	},

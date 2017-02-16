@@ -8,12 +8,15 @@
 </head>
 <body>
 
+<header class="jumbotron">
+	<h1 class="headerH1">TRIVIA <br><small>Your Mother's Favorite Game</small></h1>
+</header>
 
 
 <div class="container">
 	<h1 id="title" class="col"></h1>
 	<div class="col col-xs-12">
-		<button id="start" class="col col-12-xs btn btn-danger">START</button>
+		<button id="start" class="col col-12-xs btn btn-block btn-lg btn-success">START</button>
 	</div>
 	<div class="questionList">
 	<h2 class="col col-12-xs"><u>Questions</u></h2>
@@ -51,10 +54,11 @@
 	</div>
 
 	<div id="resetDiv">
-		<p id="unanswered"></p>
-		<p id="correct"></p>
-		<p id="wrong"></p>
-		<p class="refresh">Refresh the page to start over!</p>
+		<h3 id="unanswered"></h3>
+		<h3 id="correct"></h3>
+		<h3 id="wrong"></h3>
+		<h4 class="refresh">(Refresh the Page to Start Over)<br><button id="restartBtn" class="btn btn-lg btn-block btn-danger">REFRESH</button></h4>
+	</div>
 </div>
 
     <script src="https://code.jquery.com/jquery-3.1.1.js"></script>
