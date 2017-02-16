@@ -10,11 +10,13 @@
 
 
 
-<div class="row">
-
-
-	<h1>Time Left: <span id="timer"></span> seconds!</h1>
-	<h2><u>Questions</u></h1>
+<div class="container">
+	<h1 id="title" class="col"></h1>
+	<div class="col col-xs-12">
+		<button id="start" class="col col-12-xs btn btn-danger">START</button>
+	</div>
+	<div class="questionList">
+	<h2 class="col col-12-xs"><u>Questions</u></h2>
 
 	<p class="question question1">1. Which is commonly used to measure success?</p>        
 	<ul class="answers a1">            
@@ -46,6 +48,15 @@
 		<input type="radio" name="q4" value="wrong" id="q4 q4d"><label for="q4d">My religion prevents me from responding to this question</label><br/>
 	</ul> 
 
+	</div>
+
+	<div id="resetDiv">
+		<p id="unanswered"></p>
+		<p id="correct"></p>
+		<p id="wrong"></p>
+		<button class="resetBtn">RESTART?</button>
+	</div>
+</div>
 
     <script src="https://code.jquery.com/jquery-3.1.1.js"></script>
     <script type="text/javascript" src="assets/javascript/app1.js"></script>
