@@ -33,24 +33,33 @@ var game = {
         // console.log(abcd);
         // console.log("---------");
         
-    resetGame: function() {
-    	this.unanswered = 4;
-		this.correct = 0;
-		this.wrong = 0;
-		this.userResponses = [];
-		$('#title').html("Start Game");
-		$('.questionList').addClass('hidden');
-		$('#resetDiv').addClass('hidden');
+ //    resetGame: function() {
+ //    	this.unanswered = 4;
+	// 	this.correct = 0;
+	// 	this.wrong = 0;
+	// 	this.userResponses = [];
+	// 	$('#title').html("Start Game");
+	// 	$('.questionList').addClass('hidden');
+	// 	$('#resetDiv').addClass('hidden');
+	// 	timer.time = 5,
+	// },
+
 
 		// $('#title').html("Start Game");
 		// $('.questionList').addClass('hidden');
 
+    
+
+    showGame: function() {
+		$('#start').addClass('hidden');
+		$('.questionList').removeClass('hidden');
+		timer.start();
     },
 
 
 };
 
-
+	
 
     // checkAnswer: function() {
     //    for (var i = 0; i < this.userResponses.length; i++) {
@@ -73,39 +82,28 @@ var game = {
 
 
 var timer = {
-	time: 5,
+	time: 6,
 	flag: 0,
 
 
     start: function() {
-    	var interval = setInterval(this.count, 1000);
-    	console.log(this.time);
+
+    	var interval = setInterval(timer.count,6000);
+  		console.log(timer.time);
     	var currentTime = timer.timeConverter(timer.time);
 		$('#title').html("Time Remaining: " + currentTime + " seconds!");
-
-
   	},
 
-  	stop: function() {
-  		game.result();
-		setTimeout(5000)
+  	count: function() {
+		if (timer.time >0) {
+			timer.time--;
+		}
+
+		else { 
+			clearInterval(intervalId); 
+		};
   	},
 
-  	reset: function() {
-  		timer.time = 0;
-
-  	},
-
-	count: function() {
-	timer.time--;
-	var currentTime = timer.timeConverter(timer.time);
-	$('#title').html("Time Remaining: " + currentTime + " seconds!");
-
-	if (timer.time === 0) {
-		timer.stop();
-	}
-
-  	},
 
   	timeConverter: function(t) {
 
@@ -146,10 +144,10 @@ $(document).ready(function() {
 });
 
 $('#start').on('click', function() {
+	game.showGame();
 
-	$('#start').addClass('hidden');
-	$('.questionList').removeClass('hidden');
 	timer.start();
+
 
 });
 

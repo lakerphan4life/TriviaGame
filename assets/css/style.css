@@ -2,9 +2,6 @@
     display:none;
 }
 
-.unhidden{
-    display:block;
-}
 
 .answers li { 
 list-style: upper-alpha; 
