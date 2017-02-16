@@ -1,176 +1,127 @@
-//Start button pressed:
-	//game initialized
-	//timer begins
-	//questions + timer revealed
-	//each time a question choice is selected, the response is recorded
-	//responses that are recorded will show up in the score
-//score object?
-
-//when timer = 0:
-	//game ends
-	//screen goes to show score
-
-
-
-
-
-
-
-
 var game = {
-	unanswered: 5,
+	unanswered: 4,
 	correct: 0,
 	wrong: 0,
 	answers: ["c","c","c","c"],
 
+	userResponses: [],
 
+    showGame: function() {
+		$('#start').addClass('hidden');
+		$('.questionList').removeClass('hidden');
+		$('#title').html("Ready, set, GO!");
+		setTimeout(timer.start,1400);
 
-	q1ans: 0,
-	q2ans: 0,
-	q3ans: 0,
-	q4ans: 0,
+    },
 
-	responses: [],
-
-	// q1ans: "c", 
-	// q2ans: "c", 
-	// q3ans: "c", 
-	// q4ans: "c", 
-
-
-	readResponse: function () {
-
-	for (var i=0;i<this.unanswered;i++){
-		if (this.responses[i] === this.answers[i]){
-			this.unanswered--;
-			this.correct++;
+	result: function() {
+		for (var i = 0; i < this.userResponses.length; i++) {
+			if (this.userResponses[i] === this.answers[i]) {
+				this.correct++;
+				this.unanswered--;
+			}
+			if (this.userResponses[i] !== this.answers[i]) {
+				this.wrong++;
+				this.unanswered--;
+			}
 		}
-		else{
-			this.unanswered--;
-			this.wrong++;
-		};
 
-		// var resp = rep;
-	// 	if ( responses ===  ) {
-	// 		this.correctResponse();
-	// 	}
-	// 	else { this.wrongResponse(); };
-	// },
-		// console.log(this.responses)
+		$('#title').html("GAME OVER"); //Display GAME OVER text
+		$('.questionList').addClass('hidden');	//hide the questions
+		$('#resetDiv').removeClass('hidden');	//show the reset div
+		$('#unanswered').html("Unanswered: " + this.unanswered); //display the no. of unanswered 
+		$('#correct').html("Correct: " + this.correct);	//display the no. of correct 
+		$('#wrong').html("Wrong: " + this.wrong);	//display the no. of wrong 
+
 	},
-	// correctResponse: function() {
-	// 	this.unanswered--;
-	// 	this.correct++;
-	// },
 
-	// wrongResponse: function() {
-	// 	this.unanswered--;
-	// 	this.wrong++;
-	// },
 
 };
-// $('input[name=radioName]:checked').val();
-// $("#q1").on( "click", function() {
-// 	var q1r = $('input[name=radioName]:checked').val();
-// 	console.log(q1r);
-// 	game.readResponse(q1r);
-// });
 
-$("input").on( "click", function() {
+var timer = {
+	time: 5,
+	flag: 0,
 
-	if ($( "input:checked" ).attr("name") === "q1") {
-		var q1r = $( "input:checked" ).val();
-		console.log(q1r);
-	};
+	start: function() {
+		$('#title').html("Time Remaining: " + timer.timeConverter(timer.time) + " seconds!");
 
-	if ($( "input:checked" ).attr("name") === "q2") {
-		var q2r = $( "input:checked" ).val();
-		console.log(q2r);
-	};
+    //Game begins with flag = 0. THerefore, this condition is met, and flag becomes 1. 
+    if (timer.flag === 0) {
+      intervalId = setInterval(timer.count, 1000);
+      console.log(timer.time)
+      timer.flag++;
+    };
 
-	if ( $( "input:checked" ).attr("name") === "q3") {
-		var q3r = $( "input:checked" ).val();
-		console.log(q3r);
-	};
+  },
 
-	if ($( "input:checked" ).attr("name") === "q4") {
-		var q4r = $( "input:checked" ).val();
-		console.log(q4r);
-	};
+	stop: function() {
+		clearInterval(intervalId);
+		game.result();
+	},
+
+  count: function() {
+  	if (timer.time > 0) {
+		timer.time--;
+		var currentTime = timer.timeConverter(timer.time);
+		$('#title').html("Time Remaining: " + currentTime + " seconds!");
+	}
+	else { timer.stop(); };
+  },
+
+  timeConverter: function(t) {
+
+    //  Takes the current time in seconds and convert it to minutes and seconds (mm:ss).
+    var minutes = Math.floor(t / 60);
+    var seconds = t - (minutes * 60);
+
+    if (seconds < 10) {
+      seconds = "0" + seconds;
+    }
+
+    if (minutes === 0) {
+      minutes = "00";
+    }
+
+    else if (minutes < 10) {
+      minutes = "0" + minutes;
+    }
+
+    return minutes + ":" + seconds;
+  },
+
+
+
+
+};
+
+
+//EVENTS
+$(document).ready(function() { 
+	$('#title').html("Start Game");
+	$('.questionList').addClass('hidden');
+	$('#resetDiv').addClass('hidden');
 
 });
 
-// $( "#q2" ).on( "click", function() {
-// 	var q2r = $( "input:checked" ).attr("name");
-// 	console.log(q2r);
+$('#start').on('click', function() {
+	game.showGame();
 
-// });
-// $( "#q3" ).on( "click", function() {
-// 	var q3r = $( "input:checked" ).attr("name");
-// 	console.log(q3r);
-// });
-
-// $( "#q4" ).on( "click", function() {
-// 	var q4r = $( "input:checked" ).attr("name");
-// 	console.log(q4r);
-// });
+});
 
 
 
-// 	if ( (qr === "q1") && ( game.q1ans === 0 )) {
-// 		var q1r = $( "input:checked" ).val();
-// 		game.q1ans++;
-// 		game.responses[0] = q1r;
-// 		game.readResponse(q1r);
-// 	};
-// 	if ( (qr === "q2") && ( game.q2ans === 0 )) {
-// 		var q2r = $( "input:checked" ).val();
-// 		game.responses[1] = q2r;
-// 		game.readResponse(q2r);
-// 	};
-// 	if ( (qr === "q3") && ( game.q3ans === 0 )) {
-// 		var q3r = $( "input:checked" ).val();
-// 		game.responses[2] = q3r;
-// 		game.readResponse(q3r);
-// 	};
-// 	if ( (qr === "q4") && ( game.q4ans === 0 )) {
-// 		var q4r = $( "input:checked" ).val();
-// 		game.responses[3] = q4r;		
-// 		game.readResponse(q4r);
-// 	};
+function QuestionClick(x, y,z){
+   this.y = y;
+   this.x = x;
+   console.log(x);
+   console.log(y)
+   $('input[name="'+x+'"]').on('click', function(){
+       var answer = $('input[name="'+x+'"]:checked').val();
+           game.userResponses[z] = answer;
+	});
+}
 
-
-
-
-// 	// if (($( "input:checked" ).val())
-// 	// var response = $( "input:checked" ).val();
-	
-// 	// console.log(response);
-// 	// if ($( "input:checked" )) {
-// 	// 	var response1 = $( "input:checked" ).val();
-// 	// 	console.log(response1);
-// 	// 	game.readResponse(response1);
-// 	// };
-// });
-// //question1
-
-// 	// $("input")
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+QuestionClick('q1', 'q1r' ,0);
+QuestionClick('q2', 'q2r' , 1);
+QuestionClick('q3', 'q3r', 2);
+QuestionClick('q4', 'q4r', 3);
