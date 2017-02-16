@@ -9,9 +9,19 @@ var game = {
     showGame: function() {
 		$('#start').addClass('hidden');
 		$('.questionList').removeClass('hidden');
-		$('#title').html("Ready, set, GO!");
-		setTimeout(timer.start,1400);
+		$('#title').html("Ready");
+		setTimeout(game.set,700);
+		setTimeout(game.go,1400);
+		setTimeout(timer.start,2200);
 
+    },
+
+    set: function() {
+    	$('#title').html("Set");
+    },
+
+    go: function () {
+    	$('#title').html("GO!");
     },
 
 	result: function() {
@@ -24,7 +34,7 @@ var game = {
 				this.wrong++;
 				this.unanswered--;
 			}
-		}
+		};
 
 		$('#title').html("GAME OVER"); //Display GAME OVER text
 		$('.questionList').addClass('hidden');	//hide the questions
@@ -40,19 +50,13 @@ var game = {
 
 var timer = {
 	time: 5,
-	flag: 0,
+
 
 	start: function() {
 		$('#title').html("Time Remaining: " + timer.timeConverter(timer.time) + " seconds!");
-
-    //Game begins with flag = 0. THerefore, this condition is met, and flag becomes 1. 
-    if (timer.flag === 0) {
-      intervalId = setInterval(timer.count, 1000);
-      console.log(timer.time)
-      timer.flag++;
-    };
-
-  },
+		intervalId = setInterval(timer.count, 1000);
+      	console.log(timer.time)
+  	},
 
 	stop: function() {
 		clearInterval(intervalId);
@@ -65,35 +69,26 @@ var timer = {
 		var currentTime = timer.timeConverter(timer.time);
 		$('#title').html("Time Remaining: " + currentTime + " seconds!");
 	}
-	else { timer.stop(); };
+	else { 
+		timer.stop(); 
+	};
   },
 
   timeConverter: function(t) {
-
-    //  Takes the current time in seconds and convert it to minutes and seconds (mm:ss).
     var minutes = Math.floor(t / 60);
     var seconds = t - (minutes * 60);
-
     if (seconds < 10) {
       seconds = "0" + seconds;
     }
-
     if (minutes === 0) {
       minutes = "00";
     }
-
     else if (minutes < 10) {
       minutes = "0" + minutes;
     }
-
     return minutes + ":" + seconds;
   },
-
-
-
-
 };
-
 
 //EVENTS
 $(document).ready(function() { 
@@ -105,10 +100,7 @@ $(document).ready(function() {
 
 $('#start').on('click', function() {
 	game.showGame();
-
 });
-
-
 
 function QuestionClick(x, y,z){
    this.y = y;
@@ -119,8 +111,7 @@ function QuestionClick(x, y,z){
        var answer = $('input[name="'+x+'"]:checked').val();
            game.userResponses[z] = answer;
 	});
-}
-
+};
 QuestionClick('q1', 'q1r' ,0);
 QuestionClick('q2', 'q2r' , 1);
 QuestionClick('q3', 'q3r', 2);
